@@ -369,371 +369,376 @@ export default function Dashboard() {
 
   return (
     <ProtectedRoute>
-  <div className="flex min-h-screen bg-gray-900 text-gray-100 overflow-x-hidden">
-    {/* Mobile Sidebar Toggle Button */}
-    <button
-      className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-md bg-green-600 text-white hover:bg-green-700 transition-colors"
-      onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-    >
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        className="h-6 w-6"
-        fill="none"
-        viewBox="0 0 24 24"
-        stroke="currentColor"
-      >
-        <path
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          strokeWidth={2}
-          d="M4 6h16M4 12h16M4 18h16"
-        />
-      </svg>
-    </button>
-
-    {/* Sidebar */}
-    <aside
-      className={`fixed inset-y-0 left-0 w-64 bg-gray-800 p-6 flex flex-col items-center shadow-lg transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 z-40 ${
-        isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-      }`}
-    >
-      <button
-        className="lg:hidden absolute top-4 right-4 p-2 rounded-md text-gray-400 hover:text-white"
-        onClick={() => setIsSidebarOpen(false)}
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="h-6 w-6"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
+      <div className="flex min-h-screen bg-gray-900 text-gray-100 overflow-x-hidden">
+        {/* Mobile Sidebar Toggle Button */}
+        <button
+          className="lg:hidden fixed top-4 left-4 z-50 p-2 rounded-md bg-green-600 text-white hover:bg-green-700 transition-colors"
+          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
-      </button>
-
-      {user && (
-        <div className="flex flex-col items-center mb-8 mt-8 lg:mt-0">
-          <img
-            src={user.picture}
-            alt="User Profile"
-            className="w-24 h-24 rounded-full border-4 border-green-500 mb-4 object-cover"
-          />
-          <h1 className="text-xl font-semibold text-white mb-1">
-            {user.name}
-          </h1>
-          <p className="text-sm text-gray-400 mb-4">{user.email}</p>
-          <button
-            onClick={handleLogout}
-            disabled={logoutLoading}
-            className="w-full px-5 cursor-pointer py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200 flex items-center justify-center gap-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
           >
-            {logoutLoading ? "Logging out..." : "Logout"}
-          </button>
-        </div>
-      )}
-
-      <nav className="w-full">
-        <ul className="space-y-2">
-          <li>
-            <button
-              onClick={() => {
-                setFilterType("today");
-                setIsSidebarOpen(false);
-              }}
-              className={`w-full text-left px-4 py-2 rounded-md transition-colors duration-200 flex justify-between items-center ${
-                filterType === "today"
-                  ? "bg-green-600 text-white shadow-md"
-                  : "text-gray-300 hover:bg-gray-700 hover:text-white"
-              }`}
-            >
-              <span>Today</span>
-              <span className="bg-gray-700 text-white text-xs font-semibold px-2 py-1 rounded-full">
-                {todayTasksCount}
-              </span>
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={() => {
-                setFilterType("pending");
-                setIsSidebarOpen(false);
-              }}
-              className={`w-full text-left px-4 py-2 rounded-md transition-colors duration-200 flex justify-between items-center ${
-                filterType === "pending"
-                  ? "bg-green-600 text-white shadow-md"
-                  : "text-gray-300 hover:bg-gray-700 hover:text-white"
-              }`}
-            >
-              <span>Pending</span>
-              <span className="bg-gray-700 text-white text-xs font-semibold px-2 py-1 rounded-full">
-                {pendingTasksCount}
-              </span>
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={() => {
-                setFilterType("completed");
-                setIsSidebarOpen(false);
-              }}
-              className={`w-full text-left px-4 py-2 rounded-md transition-colors duration-200 flex justify-between items-center ${
-                filterType === "completed"
-                  ? "bg-green-600 text-white shadow-md"
-                  : "text-gray-300 hover:bg-gray-700 hover:text-white"
-              }`}
-            >
-              <span>Completed</span>
-              <span className="bg-gray-700 text-white text-xs font-semibold px-2 py-1 rounded-full">
-                {completedTasksCount}
-              </span>
-            </button>
-          </li>
-          <li>
-            <button
-              onClick={() => {
-                setFilterType("all");
-                setIsSidebarOpen(false);
-              }}
-              className={`w-full text-left px-4 py-2 rounded-md transition-colors duration-200 flex justify-between items-center ${
-                filterType === "all"
-                  ? "bg-green-600 text-white shadow-md"
-                  : "text-gray-300 hover:bg-gray-700 hover:text-white"
-              }`}
-            >
-              <span>All Tasks</span>
-              <span className="bg-gray-700 text-white text-xs font-semibold px-2 py-1 rounded-full">
-                {totalTasksCount}
-              </span>
-            </button>
-          </li>
-        </ul>
-      </nav>
-    </aside>
-
-    {/* Main Content */}
-    <main className="flex-1 flex flex-col p-4 md:p-8 pt-16 lg:pt-8 overflow-auto">
-      {/* Header */}
-      <header className="mb-8 text-center lg:text-left">
-        <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-2">
-          Your Tasks
-        </h2>
-        <p className="text-gray-400 text-base md:text-lg">
-          Stay organized and manage your daily tasks efficiently.
-        </p>
-      </header>
-
-      {/* Add Todo Section */}
-      <div className="bg-gray-800 rounded-lg shadow-xl p-4 md:p-6 mb-8">
-        <h3 className="text-xl md:text-2xl font-semibold text-white mb-4">
-          Add a New Task
-        </h3>
-        <form
-          onSubmit={handleAddTodo}
-          className="flex flex-col sm:flex-row gap-3"
-        >
-          <input
-            type="text"
-            value={newTodo}
-            onChange={(e) => setNewTodo(e.target.value)}
-            placeholder="e.g., Buy groceries, Finish report..."
-            className="flex-1 px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 text-base"
-          />
-          <button
-            type="submit"
-            className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200 flex items-center justify-center gap-2 shadow-md text-base mt-2 sm:mt-0"
-          >
-            <PlusIcon /> Add Task
-          </button>
-        </form>
-      </div>
-
-      {/* Task List Section */}
-      <div className="bg-gray-800 rounded-lg shadow-xl p-4 md:p-6 flex-1">
-        <h3 className="text-xl md:text-2xl font-semibold text-white mb-6">
-          {filterType === "today" && "Today's Tasks"}
-          {filterType === "pending" && "Pending Tasks"}
-          {filterType === "completed" && "Completed Tasks"}
-          {filterType === "all" && "All Tasks"}
-        </h3>
-
-        {/* Search and Filter Bar */}
-        <div className="mb-6 flex flex-col sm:flex-row gap-4">
-          <div className="relative flex-1">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <SearchIcon />
-            </div>
-            <input
-              type="text"
-              placeholder="Search tasks..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 text-base"
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 12h16M4 18h16"
             />
-          </div>
-          <input
-            type="date"
-            value={filterDate}
-            onChange={(e) => setFilterDate(e.target.value)}
-            className="w-full sm:w-auto px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-green-500 text-base"
-            title="Filter by Date"
-          />
-          <input
-            type="time"
-            value={filterTime}
-            onChange={(e) => setFilterTime(e.target.value)}
-            className="w-full sm:w-auto px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-green-500 text-base"
-            title="Filter by Time"
-          />
-        </div>
+          </svg>
+        </button>
 
-        {currentFilteredTodos.length === 0 ? (
-          <p className="text-gray-500 text-center py-10 text-base md:text-lg">
-            {searchTerm
-              ? "No tasks found matching your search."
-              : filterType === "today"
-              ? "No tasks for today. Enjoy your day!"
-              : filterType === "pending"
-              ? "No pending tasks. You're all caught up!"
-              : filterType === "completed"
-              ? "No completed tasks yet. Get to work!"
-              : "No tasks found. Time to add one!"}
-          </p>
-        ) : (
-          <ul className="space-y-4">
-            {currentFilteredTodos.map((todo) => (
-              <li
-                key={todo.id}
-                className={`p-4 rounded-lg flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 transition-all duration-200 ${
-                  todo.completed
-                    ? "bg-gray-700 border border-gray-600 opacity-70"
-                    : "bg-gray-700 border border-gray-600 hover:border-green-500"
-                }`}
+        {/* Sidebar */}
+        <aside
+          className={`fixed inset-y-0 left-0 w-64 bg-gray-800 p-6 flex flex-col items-center shadow-lg transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 z-40 ${
+            isSidebarOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
+        >
+          <button
+            className="lg:hidden absolute top-4 right-4 p-2 rounded-md text-gray-400 hover:text-white"
+            onClick={() => setIsSidebarOpen(false)}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+
+          {user && (
+            <div className="flex flex-col items-center mb-8 mt-8 lg:mt-0">
+              <img
+                src={user.picture}
+                alt="User Profile"
+                className="w-24 h-24 rounded-full border-4 border-green-500 mb-4 object-cover"
+              />
+              <h1 className="text-xl font-semibold text-white mb-1">
+                {user.name}
+              </h1>
+              <p className="text-sm text-gray-400 mb-4">{user.email}</p>
+              <button
+                onClick={handleLogout}
+                disabled={logoutLoading}
+                className="w-full px-5 cursor-pointer py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200 flex items-center justify-center gap-2 text-sm disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                {editingTodoId === todo.id ? (
-                  <form
-                    onSubmit={(e) => handleSaveEdit(e, todo.id)}
-                    className="flex flex-col sm:flex-row flex-1 gap-2 w-full"
-                  >
-                    <input
-                      type="text"
-                      value={editingTodoTitle}
-                      onChange={(e) => setEditingTodoTitle(e.target.value)}
-                      className="flex-1 px-3 py-2 rounded-lg bg-gray-600 border border-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-green-500 text-base"
-                      autoFocus
-                    />
-                    <div className="flex gap-2 mt-2 sm:mt-0">
-                      <button
-                        type="submit"
-                        className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm flex items-center gap-1"
-                      >
-                        <CheckIcon /> Save
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => setEditingTodoId(null)}
-                        className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 text-sm"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  </form>
-                ) : (
-                  <>
-                    {/* Task content */}
-                    <div className="flex items-start sm:items-center gap-4 flex-1 min-w-0">
-                      <input
-                        type="checkbox"
-                        checked={todo.completed}
-                        onChange={() => handleToggleComplete(todo.id)}
-                        className="flex-shrink-0 form-checkbox h-5 w-5 text-green-500 rounded border-gray-500 focus:ring-green-500 transition-colors duration-200 cursor-pointer mt-1"
-                      />
-                      <div className="ml-3 flex-1 min-w-0">
-                        <p
-                          className={`font-medium text-base sm:text-lg ${
-                            todo.completed
-                              ? "line-through text-gray-500"
-                              : "text-white"
-                          } truncate`}
-                        >
-                          {todo.title}
-                        </p>
-                        <p className="text-sm text-gray-400 flex items-center gap-2 mt-1 whitespace-nowrap sm:whitespace-normal">
-                          <CalendarIcon />
-                          {new Date(todo.created_at).toLocaleDateString(
-                            "en-US",
-                            {
-                              year: "numeric",
-                              month: "short",
-                              day: "numeric",
-                            }
-                          )}{" "}
-                          at{" "}
-                          {new Date(todo.created_at).toLocaleTimeString(
-                            "en-US",
-                            {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                            }
-                          )}
-                        </p>
-                      </div>
-                    </div>
+                {logoutLoading ? "Logging out..." : "Logout"}
+              </button>
+            </div>
+          )}
 
-                    {/* Actions */}
-                    <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto mt-2 sm:mt-0">
-                      <button
-                        onClick={() => handleEditClick(todo)}
-                        className="w-full sm:w-auto flex-1 sm:flex-none px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 text-sm flex items-center justify-center gap-2"
-                      >
-                        <EditIcon />
-                        <span className="hidden sm:inline">Edit</span>
-                      </button>
-
-                      <button
-                        onClick={() => handleToggleComplete(todo.id)}
-                        className={`w-full sm:w-auto flex-1 sm:flex-none px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center justify-center gap-2 ${
-                          todo.completed
-                            ? "bg-yellow-600 hover:bg-yellow-700 text-white"
-                            : "bg-green-600 hover:bg-green-700 text-white"
-                        }`}
-                      >
-                        {todo.completed ? (
-                          <>
-                            <span className="sm:hidden">↺</span>
-                            <span className="hidden sm:inline">Undo</span>
-                          </>
-                        ) : (
-                          <>
-                            <CheckIcon />
-                            <span className="hidden sm:inline">Done</span>
-                          </>
-                        )}
-                      </button>
-
-                      <button
-                        onClick={() => handleDelete(todo.id)}
-                        className="w-full sm:w-auto flex-1 sm:flex-none px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200 text-sm flex items-center justify-center gap-2"
-                      >
-                        <TrashIcon />
-                        <span className="hidden sm:inline">Delete</span>
-                      </button>
-                    </div>
-                  </>
-                )}
+          <nav className="w-full">
+            <ul className="space-y-2">
+              <li>
+                <button
+                  onClick={() => {
+                    setFilterType("today");
+                    setIsSidebarOpen(false);
+                  }}
+                  className={`w-full text-left px-4 py-2 rounded-md transition-colors duration-200 flex justify-between items-center ${
+                    filterType === "today"
+                      ? "bg-green-600 text-white shadow-md"
+                      : "text-gray-300 hover:bg-gray-700 hover:text-white"
+                  }`}
+                >
+                  <span>Today</span>
+                  <span className="bg-gray-700 text-white text-xs font-semibold px-2 py-1 rounded-full">
+                    {todayTasksCount}
+                  </span>
+                </button>
               </li>
-            ))}
-          </ul>
-        )}
-      </div>
-    </main>
-  </div>
-</ProtectedRoute>
+              <li>
+                <button
+                  onClick={() => {
+                    setFilterType("pending");
+                    setIsSidebarOpen(false);
+                  }}
+                  className={`w-full text-left px-4 py-2 rounded-md transition-colors duration-200 flex justify-between items-center ${
+                    filterType === "pending"
+                      ? "bg-green-600 text-white shadow-md"
+                      : "text-gray-300 hover:bg-gray-700 hover:text-white"
+                  }`}
+                >
+                  <span>Pending</span>
+                  <span className="bg-gray-700 text-white text-xs font-semibold px-2 py-1 rounded-full">
+                    {pendingTasksCount}
+                  </span>
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => {
+                    setFilterType("completed");
+                    setIsSidebarOpen(false);
+                  }}
+                  className={`w-full text-left px-4 py-2 rounded-md transition-colors duration-200 flex justify-between items-center ${
+                    filterType === "completed"
+                      ? "bg-green-600 text-white shadow-md"
+                      : "text-gray-300 hover:bg-gray-700 hover:text-white"
+                  }`}
+                >
+                  <span>Completed</span>
+                  <span className="bg-gray-700 text-white text-xs font-semibold px-2 py-1 rounded-full">
+                    {completedTasksCount}
+                  </span>
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => {
+                    setFilterType("all");
+                    setIsSidebarOpen(false);
+                  }}
+                  className={`w-full text-left px-4 py-2 rounded-md transition-colors duration-200 flex justify-between items-center ${
+                    filterType === "all"
+                      ? "bg-green-600 text-white shadow-md"
+                      : "text-gray-300 hover:bg-gray-700 hover:text-white"
+                  }`}
+                >
+                  <span>All Tasks</span>
+                  <span className="bg-gray-700 text-white text-xs font-semibold px-2 py-1 rounded-full">
+                    {totalTasksCount}
+                  </span>
+                </button>
+              </li>
+            </ul>
+          </nav>
+        </aside>
 
+        {/* Main Content */}
+        <main className="flex-1 flex flex-col p-4 md:p-8 pt-16 lg:pt-8 overflow-auto">
+          {/* Header */}
+          <header className="mb-8 text-center lg:text-left">
+            <h2 className="text-3xl md:text-4xl font-extrabold text-white mb-2">
+              Your Tasks
+            </h2>
+            <p className="text-gray-400 text-base md:text-lg">
+              Stay organized and manage your daily tasks efficiently.
+            </p>
+          </header>
+
+          {/* Add Todo Section */}
+          <div className="bg-gray-800 rounded-lg shadow-xl p-4 md:p-6 mb-8">
+            <h3 className="text-xl md:text-2xl font-semibold text-white mb-4">
+              Add a New Task
+            </h3>
+            <form
+              onSubmit={handleAddTodo}
+              className="flex flex-col sm:flex-row gap-3"
+            >
+              <input
+                type="text"
+                value={newTodo}
+                onChange={(e) => setNewTodo(e.target.value)}
+                placeholder="e.g., Buy groceries, Finish report..."
+                className="flex-1 px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 text-base"
+              />
+              <button
+                type="submit"
+                className="px-6 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors duration-200 flex items-center justify-center gap-2 shadow-md text-base mt-2 sm:mt-0"
+              >
+                <PlusIcon /> Add Task
+              </button>
+            </form>
+          </div>
+
+          {/* Task List Section */}
+          <div className="bg-gray-800 rounded-lg shadow-xl p-4 md:p-6 flex-1">
+            <h3 className="text-xl md:text-2xl font-semibold text-white mb-6">
+              {filterType === "today" && "Today's Tasks"}
+              {filterType === "pending" && "Pending Tasks"}
+              {filterType === "completed" && "Completed Tasks"}
+              {filterType === "all" && "All Tasks"}
+            </h3>
+
+            {/* Search and Filter Bar */}
+            <div className="mb-6 flex flex-col sm:flex-row gap-4">
+              <div className="relative flex-1">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <SearchIcon />
+                </div>
+                <input
+                  type="text"
+                  placeholder="Search tasks..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  className="w-full pl-10 pr-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 text-base"
+                />
+              </div>
+              <input
+                type="date"
+                value={filterDate}
+                onChange={(e) => setFilterDate(e.target.value)}
+                className="w-full sm:w-auto px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-green-500 text-base"
+                title="Filter by Date"
+              />
+              <input
+                type="time"
+                value={filterTime}
+                onChange={(e) => setFilterTime(e.target.value)}
+                className="w-full sm:w-auto px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 text-white focus:outline-none focus:ring-2 focus:ring-green-500 text-base"
+                title="Filter by Time"
+              />
+            </div>
+
+            {currentFilteredTodos.length === 0 ? (
+              <p className="text-gray-500 text-center py-10 text-base md:text-lg">
+                {searchTerm
+                  ? "No tasks found matching your search."
+                  : filterType === "today"
+                  ? "No tasks for today. Enjoy your day!"
+                  : filterType === "pending"
+                  ? "No pending tasks. You're all caught up!"
+                  : filterType === "completed"
+                  ? "No completed tasks yet. Get to work!"
+                  : "No tasks found. Time to add one!"}
+              </p>
+            ) : (
+              <ul className="space-y-4">
+                {currentFilteredTodos.map((todo) => (
+                  <li
+                    key={todo.id}
+                    className={`p-4 rounded-lg flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 transition-all duration-200 ${
+                      todo.completed
+                        ? "bg-gray-700 border border-gray-600 opacity-70"
+                        : "bg-gray-700 border border-gray-600 hover:border-green-500"
+                    }`}
+                  >
+                    {editingTodoId === todo.id ? (
+                      <form
+                        onSubmit={(e) => handleSaveEdit(e, todo.id)}
+                        className="flex flex-col sm:flex-row flex-1 gap-2 w-full"
+                      >
+                        <input
+                          type="text"
+                          value={editingTodoTitle}
+                          onChange={(e) => setEditingTodoTitle(e.target.value)}
+                          className="flex-1 px-3 py-2 rounded-lg bg-gray-600 border border-gray-500 text-white focus:outline-none focus:ring-2 focus:ring-green-500 text-base"
+                          autoFocus
+                        />
+                        <div className="flex gap-2 mt-2 sm:mt-0">
+                          <button
+                            type="submit"
+                            className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 text-sm flex items-center gap-1"
+                          >
+                            <CheckIcon /> Save
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setEditingTodoId(null)}
+                            className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 text-sm"
+                          >
+                            Cancel
+                          </button>
+                        </div>
+                      </form>
+                    ) : (
+                      <>
+                        {/* Task content */}
+                        <div className="flex items-start sm:items-center gap-4 flex-1 min-w-0">
+                          <input
+                            type="checkbox"
+                            checked={todo.completed}
+                            onChange={() => handleToggleComplete(todo.id)}
+                            className="flex-shrink-0 form-checkbox h-5 w-5 text-green-500 rounded border-gray-500 focus:ring-green-500 transition-colors duration-200 cursor-pointer mt-1"
+                          />
+                          <div className="ml-3 flex-1 min-w-0">
+                            <p
+                              className={`font-medium text-base sm:text-lg ${
+                                todo.completed
+                                  ? "line-through text-gray-500"
+                                  : "text-white"
+                              } truncate`}
+                            >
+                              {todo.title}
+                            </p>
+
+                            <p className="text-sm text-gray-400 flex items-center gap-2 mt-1 flex-wrap break-words">
+                              <span className="flex-shrink-0">
+                                <CalendarIcon />
+                              </span>
+                              <span className="truncate">
+                                {new Date(todo.created_at).toLocaleDateString(
+                                  "en-US",
+                                  {
+                                    year: "numeric",
+                                    month: "short",
+                                    day: "numeric",
+                                  }
+                                )}
+                              </span>
+                              <span className="truncate">
+                                {new Date(todo.created_at).toLocaleTimeString(
+                                  "en-US",
+                                  {
+                                    hour: "2-digit",
+                                    minute: "2-digit",
+                                  }
+                                )}
+                              </span>
+                            </p>
+                          </div>
+                        </div>
+
+                        {/* Actions */}
+                        <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto mt-2 sm:mt-0">
+                          <button
+                            onClick={() => handleEditClick(todo)}
+                            className="w-full sm:w-auto flex-1 sm:flex-none px-3 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 text-sm flex items-center justify-center gap-2"
+                          >
+                            <EditIcon />
+                            <span className="hidden sm:inline">Edit</span>
+                          </button>
+
+                          <button
+                            onClick={() => handleToggleComplete(todo.id)}
+                            className={`w-full sm:w-auto flex-1 sm:flex-none px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center justify-center gap-2 ${
+                              todo.completed
+                                ? "bg-yellow-600 hover:bg-yellow-700 text-white"
+                                : "bg-green-600 hover:bg-green-700 text-white"
+                            }`}
+                          >
+                            {todo.completed ? (
+                              <>
+                                <span className="sm:hidden">↺</span>
+                                <span className="hidden sm:inline">Undo</span>
+                              </>
+                            ) : (
+                              <>
+                                <CheckIcon />
+                                <span className="hidden sm:inline">Done</span>
+                              </>
+                            )}
+                          </button>
+
+                          <button
+                            onClick={() => handleDelete(todo.id)}
+                            className="w-full sm:w-auto flex-1 sm:flex-none px-3 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200 text-sm flex items-center justify-center gap-2"
+                          >
+                            <TrashIcon />
+                            <span className="hidden sm:inline">Delete</span>
+                          </button>
+                        </div>
+                      </>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </main>
+      </div>
+    </ProtectedRoute>
   );
 }
