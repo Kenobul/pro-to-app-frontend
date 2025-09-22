@@ -51,21 +51,29 @@ export default function LandingPage() {
           <span className="block text-yellow-300">App Software</span>
         </h1>
         <p className="text-base sm:text-lg lg:text-xl mb-8 text-gray-200 max-w-lg leading-relaxed">
-          A web application to organize your tasks, stay productive, and achieve your goals — designed with simplicity and efficiency in mind.
+          A web application to organize your tasks, stay productive, and achieve
+          your goals — designed with simplicity and efficiency in mind.
         </p>
 
         {/* Login Button */}
-        <a href={`${backendURL}/api/auth/google`} className="inline-block cursor-pointer">
+        <a
+          href={`${backendURL}/api/auth/google`}
+          className="inline-block cursor-pointer"
+        >
           <motion.button
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.95 }}
-            className="px-8 py-4 cursor-pointer bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-200 
-                       text-gray-900 font-semibold rounded-full shadow-lg
-                       hover:shadow-yellow-300/40 transition-all duration-300
-                       focus:outline-none focus:ring-4 focus:ring-yellow-300/50 flex items-center space-x-3"
+            className="px-4 py-2 sm:px-6 sm:py-3 lg:px-8 lg:py-4 
+               bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-200 
+               text-gray-900 font-semibold rounded-full shadow-lg
+               hover:shadow-yellow-300/40 transition-all duration-300
+               focus:outline-none focus:ring-4 focus:ring-yellow-300/50 
+               flex items-center space-x-2 sm:space-x-3"
           >
-            <span className="text-xl">🚀</span>
-            <span>Sign in with Google</span>
+            <span className="text-lg sm:text-xl">🚀</span>
+            <span className="text-sm sm:text-base lg:text-lg">
+              Sign in with Google
+            </span>
           </motion.button>
         </a>
       </motion.div>
