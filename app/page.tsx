@@ -4,6 +4,7 @@ import { Poppins } from "next/font/google";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { BACKEND_URL as backendURL } from "../constants/constant";
+
 const poppins = Poppins({
   weight: ["400", "600", "800"],
   subsets: ["latin"],
@@ -11,8 +12,6 @@ const poppins = Poppins({
 });
 
 export default function LandingPage() {
-  
-
   return (
     <main
       className={`relative min-h-screen flex flex-col md:flex-row items-center justify-between 
@@ -28,12 +27,14 @@ export default function LandingPage() {
       <div className="absolute top-1/2 left-1/2 w-64 h-64 bg-yellow-300/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"></div>
 
       {/* Navbar */}
-      <header className="absolute top-0 left-0 w-full flex justify-between items-center py-4 px-6 sm:px-10 lg:px-20 z-20">
+      <header className="absolute top-0 left-0 w-full flex justify-between items-center gap-4 py-4 px-6 sm:px-10 lg:px-20 z-20">
         {/* Logo / Brand */}
-        <h2 className="text-xl sm:text-2xl font-bold text-yellow-300">RonilTodo</h2>
+        <h2 className="flex-shrink-0 text-xl sm:text-2xl font-bold text-yellow-300">
+          RonilTodo
+        </h2>
 
         {/* Tagline Badge */}
-        <span className="px-4 py-1 text-sm rounded-full bg-yellow-300/20 text-yellow-200 font-medium border border-yellow-300/30">
+        <span className="px-4 py-1 text-xs sm:text-sm rounded-full bg-yellow-300/20 text-yellow-200 font-medium border border-yellow-300/30 whitespace-nowrap">
           🎉 100% Free to Use
         </span>
       </header>
@@ -50,8 +51,7 @@ export default function LandingPage() {
           <span className="block text-yellow-300">App Software</span>
         </h1>
         <p className="text-base sm:text-lg lg:text-xl mb-8 text-gray-200 max-w-lg leading-relaxed">
-          A web application to organize your tasks, stay productive, and achieve your goals —
-          designed with simplicity and efficiency in mind.
+          A web application to organize your tasks, stay productive, and achieve your goals — designed with simplicity and efficiency in mind.
         </p>
 
         {/* Login Button */}
@@ -105,7 +105,7 @@ export default function LandingPage() {
             Developed by{" "}
             <span className="font-semibold text-white">Ken Obul</span> •{" "}
             <a
-              href="mailto:kenobul@mpikenya.oerg"
+              href="mailto:kenobul@mpikenya.org"
               className="underline hover:text-yellow-300 transition-colors duration-300"
             >
               kenobul@mpikenya.org
